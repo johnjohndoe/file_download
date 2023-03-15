@@ -57,6 +57,8 @@ if response.status == HTTPStatus.OK:
         with open(file_path + '.etag', 'w') as f:
             f.write(etag)
         print(f'Saved ETag {etag} to file {file_path}.etag')
+    else:
+        print(f'Response does not contain an ETag header')
 
 else:
     print(f'Download failed with HTTP {response.status}')
