@@ -22,7 +22,7 @@ python file_download.py <url> <file_path>
 File download - A file download Python3 script which checks file size,
 HTTP status codes and takes HTTP ETag into account.
 
-Copyright (C) 2023 Tobias Preuss
+Copyright (C) 2023-2025 Tobias Preuss
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by

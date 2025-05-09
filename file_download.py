@@ -47,10 +47,11 @@ if response.status == HTTPStatus.OK:
     print(f'Downloaded file from "{url}" to "{file_path}" successfully')
 
     downloaded_file_size = os.path.getsize(file_path)
-    if downloaded_file_size == file_size:
-        print('File size matches expected size')
-    else:
-        print(f'Error: downloaded file size ({downloaded_file_size} bytes) does not match expected size ({file_size} bytes)')
+    if content_length is not None:
+        if downloaded_file_size == file_size:
+            print('File size matches expected size')
+        else:
+            print(f'Error: downloaded file size ({downloaded_file_size} bytes) does not match expected size ({file_size} bytes)')
 
     etag = response.headers.get('ETag')
     if etag is not None:
