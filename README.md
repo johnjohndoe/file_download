@@ -1,7 +1,8 @@
 # File download
 
 A file download Python3 script which checks file size,
-HTTP status codes and takes HTTP ETag into account.
+HTTP status codes and takes HTTP ETag and Last-Modified
+headers into account.
 
 
 ## Usage
@@ -14,6 +15,7 @@ python file_download.py <url> <file_path>
 
 - the downloaded file as `<file_path>`
 - the ETag as `<file_path>.etag`
+- the Last Modified value as `<file_path>.lastmod`
 
 
 ## License

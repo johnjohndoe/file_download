@@ -16,12 +16,17 @@ if not os.path.exists(directory_path):
     print(f'Error: directory "{directory_path}" does not exist')
     sys.exit(1)
 
+headers = {}
+
 if os.path.exists(file_path + '.etag'):
     with open(file_path + '.etag', 'r') as f:
         etag = f.read().strip()
-        headers = {'If-None-Match': etag}
-else:
-    headers = {}
+        headers['If-None-Match'] = etag
+
+if os.path.exists(file_path + '.lastmod'):
+    with open(file_path + '.lastmod', 'r') as f:
+        last_modified = f.read().strip()
+        headers['If-Modified-Since'] = last_modified
 
 req = urllib.request.Request(url, headers=headers)
 try:
@@ -57,9 +62,16 @@ if response.status == HTTPStatus.OK:
     if etag is not None:
         with open(file_path + '.etag', 'w') as f:
             f.write(etag)
-        print(f'Saved ETag {etag} to file {file_path}.etag')
-    else:
-        print(f'Response does not contain an ETag header')
+        print(f'Saved ETag "{etag}" to file {file_path}.etag')
+
+    last_modified = response.headers.get('Last-Modified')
+    if last_modified is not None:
+        with open(file_path + '.lastmod', 'w') as f:
+            f.write(last_modified)
+        print(f'Saved Last-Modified date "{last_modified}" to file {file_path}.lastmod')
+
+    if etag is None and last_modified is None:
+        print(f'Response does not contain ETag nor Last-Modified headers')
 
 else:
     print(f'Download failed with HTTP {response.status}')
